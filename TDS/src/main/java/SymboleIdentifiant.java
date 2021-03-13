@@ -1,39 +1,37 @@
 package main.java;
 
+import java.lang.reflect.Field;
+
 public class SymboleIdentifiant extends Symboles {
 
-    private String rang, scope;
 
-    public SymboleIdentifiant(String nom, String type, String cat, String rang, String scope) {
+    public SymboleIdentifiant(String nom, String type, String cat, Integer val, String rang, String scope) {
         super(nom, type, cat);
+        this.val = val;
         this.rang = rang;
         this.scope = scope;
     }
 
-    public String getRang() {
-        return rang;
-    }
-
-    public void setRang(String rang) {
-        this.rang = rang;
-    }
-
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
 
     @Override
     public String toString() {
-        return "{" +
-                "nom=" + nom +
-                ", type=" + type +
-                ", cat=" + cat +
-                ", rang=" + rang +
-                ", scope='" + scope +
-                '}';
+        StringBuilder res = new StringBuilder("{");
+        res.append("nom=")
+                .append(nom)
+                .append(", type=")
+                .append(type)
+                .append(", cat=")
+                .append(cat);
+        if(val!=null){
+            res.append(", val=").append(val);
+        }
+        if(rang!=null){
+            res.append(", rang=").append(rang);
+        }
+        if(scope!=null){
+            res.append(", scope=").append(scope);
+        }
+        res.append("}");
+        return res.toString();
     }
 }
