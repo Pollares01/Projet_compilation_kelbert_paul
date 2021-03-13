@@ -1,4 +1,6 @@
-public class SymboleIdentifiant extends Symboles{
+package main.java;
+
+public class SymboleIdentifiant extends Symboles {
 
     private String rang, scope;
 
@@ -22,5 +24,16 @@ public class SymboleIdentifiant extends Symboles{
 
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "nom=" + nom +
+                ", type=" + type +
+                ", cat=" + cat +
+                ", rang=" + rang +
+                ", scope='" + scope +
+                '}';
     }
 }

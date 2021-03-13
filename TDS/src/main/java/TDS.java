@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.ArrayList;
 
 public class TDS {
@@ -14,5 +16,13 @@ public class TDS {
 
     public void setListSym(ArrayList<Symboles> listSym) {
         this.listSym = listSym;
+    }
+
+    public void afficherTDS(){
+        StringBuilder TDS = new StringBuilder();
+        for(Symboles s: listSym){
+            TDS.append(s.toString()).append("\n");
+        }
+        System.out.println(TDS);
     }
 }

@@ -1,6 +1,8 @@
+package main.java;
+
 public abstract class Symboles {
 
-    private String nom, type, cat;
+    protected String nom, type, cat;
 
     public Symboles(String nom, String type, String cat) {
         this.nom = nom;
