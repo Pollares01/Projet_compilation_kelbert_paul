@@ -220,11 +220,11 @@ public class Main {
                     ArrayList<Symboles> symboles7 = new ArrayList<>();
                     symboles7.add(new SymboleFonction("main", "void", "fonction", null, null));
                     symboles7.add(new SymboleIdentifiant("a", "int", "global", 10, null, null));
-                    SymboleFonction f = new SymboleFonction("f", "void", "fonction", 1, 2);
-                    symboles7.add(f);
-                    symboles7.add(new SymboleIdentifiant("i", "int", "param", null, 0, f));
-                    symboles7.add(new SymboleIdentifiant("x", "int", "local", null, 0, f));
-                    symboles7.add(new SymboleIdentifiant("y", "int", "local", null, 1, f));
+                    SymboleFonction sF7 = new SymboleFonction("f", "void", "fonction", 1, 2);
+                    symboles7.add(sF7);
+                    symboles7.add(new SymboleIdentifiant("i", "int", "param", null, 0, sF7));
+                    symboles7.add(new SymboleIdentifiant("x", "int", "local", null, 0, sF7));
+                    symboles7.add(new SymboleIdentifiant("y", "int", "local", null, 1, sF7));
                     TDS tds7 = new TDS(symboles7);
 
                     Noeud prog7 = new Prog();
@@ -257,7 +257,7 @@ public class Main {
                     f7.ajouterUnFils(egal7_2);
                     f7.ajouterUnFils(egal7_3);
 
-                    Appel appel7 = new Appel(f7);
+                    Appel appel7 = new Appel("f");
                     appel7.ajouterUnFils(new Const(3));
                     Ecrire ecrire7 = new Ecrire();
                     ecrire7.ajouterUnFils(a7);
@@ -273,8 +273,58 @@ public class Main {
                 case "8":
                     System.out.println("-- EXEMPLE 8 --");
 
+                    ArrayList<Symboles> symboles8 = new ArrayList<>();
+                    symboles8.add(new SymboleFonction("main", "void", "fonction", null, null));
+                    symboles8.add(new SymboleIdentifiant("a", "int", "global", null, null, null));
+                    SymboleFonction sF8 = new SymboleFonction("f", "int", "fonction", 2, 1);
+                    symboles8.add(sF8);
+                    symboles8.add(new SymboleIdentifiant("x", "int", "local", null, 0, sF8));
+                    symboles8.add(new SymboleIdentifiant("i", "int", "param", null, 0, sF8));
+                    symboles8.add(new SymboleIdentifiant("j", "int", "param", null, 1, sF8));
+                    TDS tds8 = new TDS(symboles8);
 
+                    Noeud prog8 = new Prog();
+                    Noeud main8 = new Fonction("main");
+                    Noeud f8 = new Fonction("f");
 
+                    Idf i8 = new Idf(tds8.getSymByName("i"));
+                    Idf j8 = new Idf(tds8.getSymByName("j"));
+                    Idf x8 = new Idf(tds8.getSymByName("x"));
+                    Idf a8 = new Idf(tds8.getSymByName("a"));
+
+                    Plus plus8_1 = new Plus();
+                    plus8_1.setFilsGauche(i8);
+                    plus8_1.setFilsDroit(j8);
+                    Egal egal8_1 = new Egal();
+                    egal8_1.setFilsGauche(x8);
+                    egal8_1.setFilsDroit(plus8_1);
+
+                    Plus plus8_2 = new Plus();
+                    plus8_2.setFilsGauche(x8);
+                    plus8_2.setFilsDroit(new Const(10));
+                    Retour retour8 = new Retour("f");
+                    retour8.setLeFils(plus8_2);
+
+                    f8.ajouterUnFils(egal8_1);
+                    f8.ajouterUnFils(retour8);
+
+                    Appel appel8 = new Appel("f");
+                    appel8.ajouterUnFils(new Const(1));
+                    appel8.ajouterUnFils(new Const(2));
+                    Egal egal8_2 = new Egal();
+                    egal8_2.setFilsGauche(a8);
+                    egal8_2.setFilsDroit(appel8);
+                    Ecrire ecrire8 = new Ecrire();
+                    ecrire8.ajouterUnFils(a8);
+
+                    main8.ajouterUnFils(egal8_2);
+                    main8.ajouterUnFils(ecrire8);
+
+                    prog8.ajouterUnFils(f8);
+                    prog8.ajouterUnFils(main8);
+                    TxtAfficheur.afficher(prog8);
+
+                    tds8.afficherTDS();
                     break;
                 case "9":
                     stop = true;
