@@ -175,9 +175,49 @@ public class Main {
                 case "6":
                     System.out.println("-- EXEMPLE 6 --");
 
+                    ArrayList<Symboles> symboles6 = new ArrayList<>();
+                    symboles6.add(new SymboleFonction("main", "void", "fonction", null, null));
+                    symboles6.add(new SymboleIdentifiant("i", "int", "global", null, null, null));
+                    symboles6.add(new SymboleIdentifiant("n", "int", "global", 5, null, null));
+                    TDS tds6 = new TDS(symboles6);
+
+                    Noeud prog6 = new Prog();
+                    Noeud main6 = new Fonction("main");
+
+                    Affectation aff6 = new Affectation();
+                    aff6.setFilsGauche(new Idf(tds6.getSymByName("i")));
+                    aff6.setFilsDroit(new Const(0));
+
+                    Idf i = new Idf(tds6.getSymByName("i"));
+                    Superieur sup6 = new Superieur();
+                    sup6.setFilsGauche(i);
+                    sup6.setFilsDroit(i);
+                    Bloc bloc6_tq = new Bloc();
+                    Ecrire ecrire6 = new Ecrire();
+                    Plus plus6 = new Plus();
+                    plus6.setFilsGauche(i);
+                    plus6.setFilsDroit(new Const(1));
+                    Egal egal6 = new Egal();
+                    egal6.setFilsGauche(i);
+                    egal6.setFilsDroit(plus6);
+                    ecrire6.ajouterUnFils(i);
+                    bloc6_tq.ajouterUnFils(ecrire6);
+                    bloc6_tq.ajouterUnFils(egal6);
+                    TantQue tq6 = new TantQue(1);
+                    tq6.setCondition(sup6);
+                    tq6.setBloc(bloc6_tq);
+
+                    main6.ajouterUnFils(aff6);
+                    main6.ajouterUnFils(tq6);
+                    prog6.ajouterUnFils(main6);
+                    TxtAfficheur.afficher(prog6);
+
+                    tds6.afficherTDS();
                     break;
                 case "7":
                     System.out.println("-- EXEMPLE 7 --");
+
+
 
                     break;
                 case "8":
