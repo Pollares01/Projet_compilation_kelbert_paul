@@ -3,9 +3,9 @@ package main.java;
 public abstract class Symboles {
 
     protected String nom, type, cat;
-    protected String nbParam, nbBloc;
-    protected String rang, scope;
-    protected Integer val;
+    protected Integer nbParam, nbBloc;
+    protected SymboleFonction  scope;
+    protected Integer rang, val;
 
     public Symboles(String nom, String type, String cat) {
         this.nom = nom;
@@ -38,19 +38,19 @@ public abstract class Symboles {
     }
 
 
-    public String getNbParam() {
+    public Integer getNbParam() {
         return nbParam;
     }
 
-    public void setNbParam(String nbParam) {
+    public void setNbParam(Integer nbParam) {
         this.nbParam = nbParam;
     }
 
-    public String getNbBloc() {
+    public Integer getNbBloc() {
         return nbBloc;
     }
 
-    public void setNbBloc(String nbBloc) {
+    public void setNbBloc(Integer nbBloc) {
         this.nbBloc = nbBloc;
     }
 
@@ -63,19 +63,19 @@ public abstract class Symboles {
         this.val = val;
     }
 
-    public String getRang() {
+    public Integer getRang() {
         return rang;
     }
 
-    public void setRang(String rang) {
+    public void setRang(Integer rang) {
         this.rang = rang;
     }
 
-    public String getScope() {
+    public SymboleFonction getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
+    public void setScope(SymboleFonction scope) {
         this.scope = scope;
     }
 }

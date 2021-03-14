@@ -2,10 +2,10 @@ package main.java;
 
 public class SymboleFonction extends Symboles {
 
-    public SymboleFonction(String nom, String type, String cat, String nbParam, String nbNloc) {
+    public SymboleFonction(String nom, String type, String cat, Integer nbParam, Integer nbBloc) {
         super(nom, type, cat);
         this.nbParam = nbParam;
-        this.nbBloc = nbNloc;
+        this.nbBloc = nbBloc;
     }
 
     @Override

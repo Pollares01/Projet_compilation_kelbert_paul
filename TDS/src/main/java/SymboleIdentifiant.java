@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 public class SymboleIdentifiant extends Symboles {
 
 
-    public SymboleIdentifiant(String nom, String type, String cat, Integer val, String rang, String scope) {
+    public SymboleIdentifiant(String nom, String type, String cat, Integer val, Integer rang, SymboleFonction scope) {
         super(nom, type, cat);
         this.val = val;
         this.rang = rang;
@@ -29,7 +29,7 @@ public class SymboleIdentifiant extends Symboles {
             res.append(", rang=").append(rang);
         }
         if(scope!=null){
-            res.append(", scope=").append(scope);
+            res.append(", scope=").append(scope.getNom());
         }
         res.append("}");
         return res.toString();

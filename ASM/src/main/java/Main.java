@@ -188,19 +188,19 @@ public class Main {
                     aff6.setFilsGauche(new Idf(tds6.getSymByName("i")));
                     aff6.setFilsDroit(new Const(0));
 
-                    Idf i = new Idf(tds6.getSymByName("i"));
+                    Idf i6 = new Idf(tds6.getSymByName("i"));
                     Superieur sup6 = new Superieur();
-                    sup6.setFilsGauche(i);
-                    sup6.setFilsDroit(i);
+                    sup6.setFilsGauche(i6);
+                    sup6.setFilsDroit(i6);
                     Bloc bloc6_tq = new Bloc();
                     Ecrire ecrire6 = new Ecrire();
                     Plus plus6 = new Plus();
-                    plus6.setFilsGauche(i);
+                    plus6.setFilsGauche(i6);
                     plus6.setFilsDroit(new Const(1));
                     Egal egal6 = new Egal();
-                    egal6.setFilsGauche(i);
+                    egal6.setFilsGauche(i6);
                     egal6.setFilsDroit(plus6);
-                    ecrire6.ajouterUnFils(i);
+                    ecrire6.ajouterUnFils(i6);
                     bloc6_tq.ajouterUnFils(ecrire6);
                     bloc6_tq.ajouterUnFils(egal6);
                     TantQue tq6 = new TantQue(1);
@@ -217,11 +217,63 @@ public class Main {
                 case "7":
                     System.out.println("-- EXEMPLE 7 --");
 
+                    ArrayList<Symboles> symboles7 = new ArrayList<>();
+                    symboles7.add(new SymboleFonction("main", "void", "fonction", null, null));
+                    symboles7.add(new SymboleIdentifiant("a", "int", "global", 10, null, null));
+                    SymboleFonction f = new SymboleFonction("f", "void", "fonction", 1, 2);
+                    symboles7.add(f);
+                    symboles7.add(new SymboleIdentifiant("i", "int", "param", null, 0, f));
+                    symboles7.add(new SymboleIdentifiant("x", "int", "local", null, 0, f));
+                    symboles7.add(new SymboleIdentifiant("y", "int", "local", null, 1, f));
+                    TDS tds7 = new TDS(symboles7);
 
+                    Noeud prog7 = new Prog();
+                    Noeud main7 = new Fonction("main");
+                    Noeud f7 = new Fonction("f");
 
+                    Idf i7 = new Idf(tds7.getSymByName("i"));
+                    Idf y7 = new Idf(tds7.getSymByName("y"));
+                    Idf x7 = new Idf(tds7.getSymByName("x"));
+                    Idf a7 = new Idf(tds7.getSymByName("a"));
+
+                    Egal egal7_1 = new Egal();
+                    egal7_1.setFilsGauche(i7);
+                    egal7_1.setFilsDroit(new Const(0));
+                    Egal egal7_2 = new Egal();
+                    egal7_2.setFilsGauche(y7);
+                    egal7_2.setFilsDroit(new Const(1));
+
+                    Plus plus7_1 = new Plus();
+                    plus7_1.setFilsGauche(x7);
+                    plus7_1.setFilsDroit(y7);
+                    Plus plus7_2 = new Plus();
+                    plus7_2.setFilsGauche(i7);
+                    plus7_2.setFilsDroit(plus7_1);
+                    Egal egal7_3 = new Egal();
+                    egal7_3.setFilsGauche(a7);
+                    egal7_3.setFilsDroit(plus7_2);
+
+                    f7.ajouterUnFils(egal7_1);
+                    f7.ajouterUnFils(egal7_2);
+                    f7.ajouterUnFils(egal7_3);
+
+                    Appel appel7 = new Appel(f7);
+                    appel7.ajouterUnFils(new Const(3));
+                    Ecrire ecrire7 = new Ecrire();
+                    ecrire7.ajouterUnFils(a7);
+                    main7.ajouterUnFils(appel7);
+                    main7.ajouterUnFils(ecrire7);
+
+                    prog7.ajouterUnFils(f7);
+                    prog7.ajouterUnFils(main7);
+                    TxtAfficheur.afficher(prog7);
+
+                    tds7.afficherTDS();
                     break;
                 case "8":
                     System.out.println("-- EXEMPLE 8 --");
+
+
 
                     break;
                 case "9":
