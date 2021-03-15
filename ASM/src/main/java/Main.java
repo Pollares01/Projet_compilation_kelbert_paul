@@ -45,8 +45,9 @@ public class Main {
                     prog.ajouterUnFils(new Fonction("main"));
                     TxtAfficheur.afficher(prog);
 
-
                     tds.afficherTDS();
+
+                    System.out.println(Generateur.genererASM(prog, new StringBuilder()));
                     break;
                 case "2":
                     System.out.println("-- EXEMPLE 2 --");
@@ -64,6 +65,7 @@ public class Main {
                     TxtAfficheur.afficher(prog2);
 
                     tds2.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog2, new StringBuilder()));
                     break;
                 case "3":
                     System.out.println("-- EXEMPLE 3 --");
@@ -101,6 +103,7 @@ public class Main {
 
                     tds3.afficherTDS();
 
+                    System.out.println(Generateur.genererASM(prog3, new StringBuilder()));
                     break;
                 case "4":
                     System.out.println("-- EXEMPLE 4 --");
@@ -130,6 +133,7 @@ public class Main {
                     TxtAfficheur.afficher(prog4);
 
                     tds4.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog4, new StringBuilder()));
                     break;
                 case "5":
                     System.out.println("-- EXEMPLE 5 --");
@@ -171,6 +175,7 @@ public class Main {
                     TxtAfficheur.afficher(prog5);
 
                     tds5.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog5, new StringBuilder()));
                     break;
                 case "6":
                     System.out.println("-- EXEMPLE 6 --");
@@ -213,6 +218,7 @@ public class Main {
                     TxtAfficheur.afficher(prog6);
 
                     tds6.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog6, new StringBuilder()));
                     break;
                 case "7":
                     System.out.println("-- EXEMPLE 7 --");
@@ -269,6 +275,7 @@ public class Main {
                     TxtAfficheur.afficher(prog7);
 
                     tds7.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog7, new StringBuilder()));
                     break;
                 case "8":
                     System.out.println("-- EXEMPLE 8 --");
@@ -325,6 +332,7 @@ public class Main {
                     TxtAfficheur.afficher(prog8);
 
                     tds8.afficherTDS();
+                    System.out.println(Generateur.genererASM(prog8, new StringBuilder()));
                     break;
                 case "9":
                     stop = true;
