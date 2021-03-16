@@ -4,6 +4,11 @@ import main.java.SymboleIdentifiant;
 import main.java.Symboles;
 import main.java.TDS;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,7 +16,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         boolean stop = false;
         while(!stop){
@@ -48,6 +52,16 @@ public class Main {
                     tds.afficherTDS();
 
                     System.out.println(Generateur.genererASM(prog, new StringBuilder()));
+
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple1.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     break;
                 case "2":
                     System.out.println("-- EXEMPLE 2 --");
@@ -66,6 +80,14 @@ public class Main {
 
                     tds2.afficherTDS();
                     System.out.println(Generateur.genererASM(prog2, new StringBuilder()));
+
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple2.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog2, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "3":
                     System.out.println("-- EXEMPLE 3 --");
@@ -104,6 +126,13 @@ public class Main {
                     tds3.afficherTDS();
 
                     System.out.println(Generateur.genererASM(prog3, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple3.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog3, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "4":
                     System.out.println("-- EXEMPLE 4 --");
@@ -134,6 +163,13 @@ public class Main {
 
                     tds4.afficherTDS();
                     System.out.println(Generateur.genererASM(prog4, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple4.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog4, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "5":
                     System.out.println("-- EXEMPLE 5 --");
@@ -176,6 +212,13 @@ public class Main {
 
                     tds5.afficherTDS();
                     System.out.println(Generateur.genererASM(prog5, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple5.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog5, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "6":
                     System.out.println("-- EXEMPLE 6 --");
@@ -219,6 +262,13 @@ public class Main {
 
                     tds6.afficherTDS();
                     System.out.println(Generateur.genererASM(prog6, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple6.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog6, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "7":
                     System.out.println("-- EXEMPLE 7 --");
@@ -276,6 +326,13 @@ public class Main {
 
                     tds7.afficherTDS();
                     System.out.println(Generateur.genererASM(prog7, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple7.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog7, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "8":
                     System.out.println("-- EXEMPLE 8 --");
@@ -333,6 +390,13 @@ public class Main {
 
                     tds8.afficherTDS();
                     System.out.println(Generateur.genererASM(prog8, new StringBuilder()));
+                    try {
+                        PrintWriter pw = new PrintWriter("exemple8.asm", StandardCharsets.UTF_8);
+                        pw.println(Generateur.genererASM(prog8, new StringBuilder()));
+                        pw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "9":
                     stop = true;

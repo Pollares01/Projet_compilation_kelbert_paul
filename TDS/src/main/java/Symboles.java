@@ -4,7 +4,7 @@ public abstract class Symboles {
 
     protected String nom, type, cat;
     protected Integer nbParam, nbBloc;
-    protected SymboleFonction  scope;
+    protected main.java.SymboleFonction scope;
     protected Integer rang, val;
 
     public Symboles(String nom, String type, String cat) {
