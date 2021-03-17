@@ -245,12 +245,12 @@ public class Main {
                     Plus plus6 = new Plus();
                     plus6.setFilsGauche(i6);
                     plus6.setFilsDroit(new Const(1));
-                    Egal egal6 = new Egal();
-                    egal6.setFilsGauche(i6);
-                    egal6.setFilsDroit(plus6);
+                    Affectation Affectation6 = new Affectation();
+                    Affectation6.setFilsGauche(i6);
+                    Affectation6.setFilsDroit(plus6);
                     ecrire6.ajouterUnFils(i6);
                     bloc6_tq.ajouterUnFils(ecrire6);
-                    bloc6_tq.ajouterUnFils(egal6);
+                    bloc6_tq.ajouterUnFils(Affectation6);
                     TantQue tq6 = new TantQue(1);
                     tq6.setCondition(sup6);
                     tq6.setBloc(bloc6_tq);
@@ -292,12 +292,12 @@ public class Main {
                     Idf x7 = new Idf(tds7.getSymByName("x"));
                     Idf a7 = new Idf(tds7.getSymByName("a"));
 
-                    Egal egal7_1 = new Egal();
-                    egal7_1.setFilsGauche(i7);
-                    egal7_1.setFilsDroit(new Const(0));
-                    Egal egal7_2 = new Egal();
-                    egal7_2.setFilsGauche(y7);
-                    egal7_2.setFilsDroit(new Const(1));
+                    Affectation Affectation7_1 = new Affectation();
+                    Affectation7_1.setFilsGauche(i7);
+                    Affectation7_1.setFilsDroit(new Const(0));
+                    Affectation Affectation7_2 = new Affectation();
+                    Affectation7_2.setFilsGauche(y7);
+                    Affectation7_2.setFilsDroit(new Const(1));
 
                     Plus plus7_1 = new Plus();
                     plus7_1.setFilsGauche(x7);
@@ -305,13 +305,13 @@ public class Main {
                     Plus plus7_2 = new Plus();
                     plus7_2.setFilsGauche(i7);
                     plus7_2.setFilsDroit(plus7_1);
-                    Egal egal7_3 = new Egal();
-                    egal7_3.setFilsGauche(a7);
-                    egal7_3.setFilsDroit(plus7_2);
+                    Affectation Affectation7_3 = new Affectation();
+                    Affectation7_3.setFilsGauche(a7);
+                    Affectation7_3.setFilsDroit(plus7_2);
 
-                    f7.ajouterUnFils(egal7_1);
-                    f7.ajouterUnFils(egal7_2);
-                    f7.ajouterUnFils(egal7_3);
+                    f7.ajouterUnFils(Affectation7_1);
+                    f7.ajouterUnFils(Affectation7_2);
+                    f7.ajouterUnFils(Affectation7_3);
 
                     Appel appel7 = new Appel("f");
                     appel7.ajouterUnFils(new Const(3));
@@ -359,9 +359,9 @@ public class Main {
                     Plus plus8_1 = new Plus();
                     plus8_1.setFilsGauche(i8);
                     plus8_1.setFilsDroit(j8);
-                    Egal egal8_1 = new Egal();
-                    egal8_1.setFilsGauche(x8);
-                    egal8_1.setFilsDroit(plus8_1);
+                    Affectation Affectation8_1 = new Affectation();
+                    Affectation8_1.setFilsGauche(x8);
+                    Affectation8_1.setFilsDroit(plus8_1);
 
                     Plus plus8_2 = new Plus();
                     plus8_2.setFilsGauche(x8);
@@ -369,19 +369,19 @@ public class Main {
                     Retour retour8 = new Retour("f");
                     retour8.setLeFils(plus8_2);
 
-                    f8.ajouterUnFils(egal8_1);
+                    f8.ajouterUnFils(Affectation8_1);
                     f8.ajouterUnFils(retour8);
 
                     Appel appel8 = new Appel("f");
                     appel8.ajouterUnFils(new Const(1));
                     appel8.ajouterUnFils(new Const(2));
-                    Egal egal8_2 = new Egal();
-                    egal8_2.setFilsGauche(a8);
-                    egal8_2.setFilsDroit(appel8);
+                    Affectation Affectation8_2 = new Affectation();
+                    Affectation8_2.setFilsGauche(a8);
+                    Affectation8_2.setFilsDroit(appel8);
                     Ecrire ecrire8 = new Ecrire();
                     ecrire8.ajouterUnFils(a8);
 
-                    main8.ajouterUnFils(egal8_2);
+                    main8.ajouterUnFils(Affectation8_2);
                     main8.ajouterUnFils(ecrire8);
 
                     prog8.ajouterUnFils(f8);
@@ -390,6 +390,8 @@ public class Main {
 
                     tds8.afficherTDS();
                     System.out.println(Generateur.genererASM(prog8, new StringBuilder()));
+
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple8.asm", StandardCharsets.UTF_8);
                         pw.println(Generateur.genererASM(prog8, new StringBuilder()));
@@ -397,6 +399,8 @@ public class Main {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+
                     break;
                 case "9":
                     stop = true;
