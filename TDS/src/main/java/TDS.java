@@ -20,6 +20,10 @@ public class TDS {
 
     public void afficherTDS(){
         StringBuilder TDS = new StringBuilder();
+
+        for (int i = 0; i < listSym.size(); i++) {
+            Symboles s = listSym.get(i);
+        }
         for(Symboles s: this.listSym){
             TDS.append(s.toString()).append("\n");
         }
@@ -34,4 +38,7 @@ public class TDS {
         }
         return null;
     }
+
+
+
 }

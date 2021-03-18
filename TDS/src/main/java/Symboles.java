@@ -13,6 +13,7 @@ public abstract class Symboles {
         this.cat = cat;
     }
 
+
     public String getNom() {
         return nom;
     }
@@ -37,7 +38,6 @@ public abstract class Symboles {
         this.cat = cat;
     }
 
-
     public Integer getNbParam() {
         return nbParam;
     }
@@ -54,13 +54,12 @@ public abstract class Symboles {
         this.nbBloc = nbBloc;
     }
 
-
-    public Integer getVal() {
-        return val;
+    public SymboleFonction getScope() {
+        return scope;
     }
 
-    public void setVal(int val) {
-        this.val = val;
+    public void setScope(SymboleFonction scope) {
+        this.scope = scope;
     }
 
     public Integer getRang() {
@@ -71,11 +70,11 @@ public abstract class Symboles {
         this.rang = rang;
     }
 
-    public SymboleFonction getScope() {
-        return scope;
+    public Integer getVal() {
+        return val;
     }
 
-    public void setScope(SymboleFonction scope) {
-        this.scope = scope;
+    public void setVal(Integer val) {
+        this.val = val;
     }
 }
