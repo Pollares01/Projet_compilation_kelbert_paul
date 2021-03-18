@@ -133,4 +133,52 @@ public class Generateur {
         }
         return ASM.toString();
     }
+
+    public static String generer_affectation(Noeud n){
+        return null;
+    }
+
+    public static String generer_expression(Noeud n){
+        return null;
+    }
+
+    public static String generer_programme(Noeud n){
+        return null;
+    }
+
+    public static String generer_data(Noeud n){
+        return null;
+    }
+
+    public static String generer_instruction(Noeud n){
+        return null;
+    }
+
+    public static String generer_ecrire(Noeud n){
+        return null;
+    }
+
+    public static String generer_si(Noeud n){
+        return null;
+    }
+
+    public static String generer_bloc(Noeud n){
+        return null;
+    }
+
+    public static String generer_condition(Noeud n){
+        return null;
+    }
+
+    public static String generer_appel(Noeud n){
+        return null;
+    }
+
+    public static String generer_fonction(Noeud n){
+        return null;
+    }
+
+    public static String generer_retour(Noeud n){
+        return null;
+    }
 }
