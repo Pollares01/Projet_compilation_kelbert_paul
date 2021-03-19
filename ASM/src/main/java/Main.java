@@ -1,8 +1,4 @@
 import fr.ul.miage.arbre.*;
-import main.java.SymboleFonction;
-import main.java.SymboleIdentifiant;
-import main.java.Symboles;
-import main.java.TDS;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -118,12 +114,15 @@ public class Main {
                     aff3_2.setFilsGauche(new Idf(tds3.getSymByName("l")));
                     aff3_2.setFilsDroit(plus3);
 
+                    System.out.println(Generateur.generer_affectation(aff3_2));
+
                     main3.ajouterUnFils(aff3_1);
                     main3.ajouterUnFils(aff3_2);
                     prog3.ajouterUnFils(main3);
                     TxtAfficheur.afficher(prog3);
 
                     tds3.afficherTDS();
+
 
                     System.out.println(Generateur.genererASM(prog3, new StringBuilder()));
                     try {

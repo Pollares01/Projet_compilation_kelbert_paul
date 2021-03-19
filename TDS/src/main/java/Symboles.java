@@ -1,10 +1,8 @@
-package main.java;
-
 public abstract class Symboles {
 
     protected String nom, type, cat;
     protected Integer nbParam, nbBloc;
-    protected main.java.SymboleFonction scope;
+    protected SymboleFonction scope;
     protected Integer rang, val;
 
     public Symboles(String nom, String type, String cat) {
@@ -76,5 +74,17 @@ public abstract class Symboles {
 
     public void setVal(Integer val) {
         this.val = val;
+    }
+
+    public boolean isGlobal(){
+        return this.cat.equalsIgnoreCase("global");
+    }
+
+    public abstract String toTDS();
+
+
+    @Override
+    public String toString() {
+        return this.getNom();
     }
 }

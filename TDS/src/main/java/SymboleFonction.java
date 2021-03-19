@@ -1,4 +1,4 @@
-package main.java;
+
 
 public class SymboleFonction extends Symboles {
 
@@ -9,7 +9,7 @@ public class SymboleFonction extends Symboles {
     }
 
     @Override
-    public String toString() {
+    public String toTDS() {
         StringBuilder res = new StringBuilder("{");
         res.append("nom=")
                 .append(nom)

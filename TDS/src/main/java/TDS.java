@@ -1,6 +1,5 @@
-package main.java;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class TDS {
 
@@ -25,7 +24,7 @@ public class TDS {
             Symboles s = listSym.get(i);
         }
         for(Symboles s: this.listSym){
-            TDS.append(s.toString()).append("\n");
+            TDS.append(s.toTDS()).append("\n");
         }
         System.out.println(TDS);
     }
@@ -37,6 +36,16 @@ public class TDS {
             }
         }
         return null;
+    }
+
+    public ArrayList<Symboles> getIdentifiant(){
+        ArrayList<Symboles> res = new ArrayList<>();
+        for(Symboles s : this.listSym){
+            if(s instanceof SymboleIdentifiant){
+                res.add(s);
+            }
+        }
+        return res;
     }
 
 

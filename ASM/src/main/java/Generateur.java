@@ -1,5 +1,6 @@
 import fr.ul.miage.arbre.*;
 
+
 public class Generateur {
 
     public static String genererASM(Noeud arbre, StringBuilder ASM){
@@ -134,50 +135,72 @@ public class Generateur {
         return ASM.toString();
     }
 
-    public static String generer_affectation(Noeud n){
-        return null;
+    //TODO
+    public static String generer_affectation(Affectation a){
+        return Generateur.generer_expression(a.getFilsDroit()) +
+                "POP(R0)\r\n" + "ST(RO," + a.getFilsGauche().getLabel().replace("IDF/", "") + ")\r\n";
     }
 
+    //TODO
     public static String generer_expression(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_programme(Noeud n){
         return null;
     }
 
-    public static String generer_data(Noeud n){
-        return null;
+    public static String generer_data(TDS tds){
+        StringBuilder res = new StringBuilder();
+        for (Symboles idf: tds.getIdentifiant()){
+            if(idf.isGlobal()){
+                if(idf.getVal() == null){
+                    res.append(idf.getNom()).append(": LONG(").append(0).append(")\r\n");
+                } else {
+                    res.append(idf.getNom()).append(": LONG(").append(idf.val).append(")\r\n");
+                }
+            }
+        }
+        return res.toString();
     }
 
+    //TODO
     public static String generer_instruction(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_ecrire(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_si(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_bloc(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_condition(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_appel(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_fonction(Noeud n){
         return null;
     }
 
+    //TODO
     public static String generer_retour(Noeud n){
         return null;
     }
