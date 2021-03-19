@@ -82,7 +82,6 @@ public abstract class Symboles {
 
     public abstract String toTDS();
 
-
     @Override
     public String toString() {
         return this.getNom();

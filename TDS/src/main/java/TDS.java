@@ -38,6 +38,17 @@ public class TDS {
         return null;
     }
 
+    public SymboleFonction getFonctionByName(String name){
+        for(Symboles s : this.listSym){
+            if(s instanceof SymboleFonction){
+                if(s.getNom().equalsIgnoreCase(name)){
+                    return (SymboleFonction) s;
+                }
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Symboles> getIdentifiant(){
         ArrayList<Symboles> res = new ArrayList<>();
         for(Symboles s : this.listSym){
