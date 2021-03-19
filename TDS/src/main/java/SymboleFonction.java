@@ -1,5 +1,3 @@
-
-
 public class SymboleFonction extends Symboles {
 
     public SymboleFonction(String nom, String type, String cat, Integer nbParam, Integer nbBloc) {

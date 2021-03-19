@@ -137,7 +137,7 @@ public class Generateur {
 
     //TODO
     public static String generer_affectation(Affectation a){
-        return Generateur.generer_expression(a.getFilsDroit()) +
+        return Generateur.generer_expression(a.getFilsDroit()) + "\r\n" +
                 "POP(R0)\r\n" + "ST(RO," + a.getFilsGauche().getLabel().replace("IDF/", "") + ")\r\n";
     }
 
@@ -146,9 +146,21 @@ public class Generateur {
         return null;
     }
 
-    //TODO
-    public static String generer_programme(Noeud n){
-        return null;
+
+    public static String generer_programme(Prog p, TDS tds){
+        StringBuilder res = new StringBuilder();
+        res.append(".include beta.uasm" + "\r\n")
+        .append(".options tty" + "\r\n")
+        .append(".include intio.uasm" + "\r\n");
+        res.append(Generateur.generer_data(tds));
+        for (Noeud n : p.getFils()) {
+            res.append(Generateur.generer_fonction(n)).append("\r\n");
+        }
+        res.append("debut:\r\n" +
+                "\tCALL(main)\r\n" +
+                "\tHALT()\r\n" +
+                "pile:\r\n");
+        return res.toString();
     }
 
     public static String generer_data(TDS tds){
