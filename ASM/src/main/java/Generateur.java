@@ -196,7 +196,7 @@ public class Generateur {
                 res.append(Generateur.generer_appel((Fonction) n, tds)).append("\r\n");
                 break;
             case RET:
-                res.append(Generateur.generer_retour(n)).append("\r\n");
+                res.append(Generateur.generer_retour((Retour) n, tds)).append("\r\n");
                 break;
         }
         return res.toString();
