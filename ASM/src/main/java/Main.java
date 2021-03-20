@@ -43,7 +43,7 @@ public class Main {
                     prog.ajouterUnFils(new Fonction("main"));
                     TxtAfficheur.afficher(prog);
 
-                    tds.afficherTDS();
+                    TDS.afficherTDS(tds);
 
                     System.out.println(Generateur.genererASM(prog, new StringBuilder()));
 
@@ -72,7 +72,7 @@ public class Main {
                     prog2.ajouterUnFils(new Fonction("main"));
                     TxtAfficheur.afficher(prog2);
 
-                    tds2.afficherTDS();
+                    TDS.afficherTDS(tds2);
                     System.out.println(Generateur.genererASM(prog2, new StringBuilder()));
 
                     try {
@@ -112,14 +112,14 @@ public class Main {
                     aff3_2.setFilsGauche(new Idf(tds3.getSymByName("l")));
                     aff3_2.setFilsDroit(plus3);
 
-                    System.out.println(Generateur.generer_affectation(aff3_2));
+                    System.out.println(Generateur.generer_affectation(aff3_2, tds3));
 
                     main3.ajouterUnFils(aff3_1);
                     main3.ajouterUnFils(aff3_2);
                     prog3.ajouterUnFils(main3);
                     TxtAfficheur.afficher(prog3);
 
-                    tds3.afficherTDS();
+                    TDS.afficherTDS(tds3);
 
 
                     System.out.println(Generateur.genererASM(prog3, new StringBuilder()));
@@ -158,7 +158,7 @@ public class Main {
                     prog4.ajouterUnFils(main4);
                     TxtAfficheur.afficher(prog4);
 
-                    tds4.afficherTDS();
+                    TDS.afficherTDS(tds4);
                     System.out.println(Generateur.genererASM(prog4, new StringBuilder()));
                     try {
                         PrintWriter pw = new PrintWriter("exemple4.asm", StandardCharsets.UTF_8);
@@ -207,7 +207,7 @@ public class Main {
                     prog5.ajouterUnFils(main5);
                     TxtAfficheur.afficher(prog5);
 
-                    tds5.afficherTDS();
+                    TDS.afficherTDS(tds5);
                     System.out.println(Generateur.genererASM(prog5, new StringBuilder()));
                     try {
                         PrintWriter pw = new PrintWriter("exemple5.asm", StandardCharsets.UTF_8);
@@ -257,7 +257,7 @@ public class Main {
                     prog6.ajouterUnFils(main6);
                     TxtAfficheur.afficher(prog6);
 
-                    tds6.afficherTDS();
+                    TDS.afficherTDS(tds6);
                     System.out.println(Generateur.genererASM(prog6, new StringBuilder()));
                     try {
                         PrintWriter pw = new PrintWriter("exemple6.asm", StandardCharsets.UTF_8);
@@ -321,7 +321,7 @@ public class Main {
                     prog7.ajouterUnFils(main7);
                     TxtAfficheur.afficher(prog7);
 
-                    tds7.afficherTDS();
+                    TDS.afficherTDS(tds7);
                     System.out.println(Generateur.genererASM(prog7, new StringBuilder()));
                     try {
                         PrintWriter pw = new PrintWriter("exemple7.asm", StandardCharsets.UTF_8);
@@ -385,7 +385,7 @@ public class Main {
                     prog8.ajouterUnFils(main8);
                     TxtAfficheur.afficher(prog8);
 
-                    tds8.afficherTDS();
+                    TDS.afficherTDS(tds8);
                     System.out.println(Generateur.genererASM(prog8, new StringBuilder()));
 
 

@@ -136,14 +136,68 @@ public class Generateur {
     }
 
     //TODO
-    public static String generer_affectation(Affectation a){
-        return Generateur.generer_expression(a.getFilsDroit()) + "\r\n" +
+    public static String generer_affectation(Affectation a, TDS tds){
+        return Generateur.generer_expression(a.getFilsDroit(), tds) + "\r\n" +
                 "POP(R0)\r\n" + "ST(RO," + a.getFilsGauche().getLabel().replace("IDF/", "") + ")\r\n";
     }
 
-    //TODO
-    public static String generer_expression(Noeud n){
-        return null;
+
+    public static String generer_expression(Noeud n, TDS tds){
+        StringBuilder res = new StringBuilder();
+        switch (n.getCat()){
+            case CONST:
+                res.append("CMOVE(").append(n.getLabel().replace("CONST/", "")).append(",R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case IDF:
+                res.append("LD(").append(n.getLabel().replace("IDF/", "")).append(",R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case PLUS:
+                Plus plus = (Plus) n;
+                res.append(Generateur.generer_expression(plus.getFilsGauche(), tds));
+                res.append(Generateur.generer_expression(plus.getFilsDroit(), tds));
+                res.append("POP(R2)").append("\r\n");
+                res.append("POP(R1)").append("\r\n");
+                res.append("ADD(R1,R2,R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case MOINS:
+                Moins moins = (Moins) n;
+                res.append(Generateur.generer_expression(moins.getFilsGauche(), tds));
+                res.append(Generateur.generer_expression(moins.getFilsDroit(), tds));
+                res.append("POP(R2)").append("\r\n");
+                res.append("POP(R1)").append("\r\n");
+                res.append("SUB(R1,R2,R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case MUL:
+                Multiplication mul = (Multiplication) n;
+                res.append(Generateur.generer_expression(mul.getFilsGauche(), tds));
+                res.append(Generateur.generer_expression(mul.getFilsDroit(), tds));
+                res.append("POP(R2)").append("\r\n");
+                res.append("POP(R1)").append("\r\n");
+                res.append("MUL(R1,R2,R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case DIV:
+                Division div = (Division) n;
+                res.append(Generateur.generer_expression(div.getFilsGauche(), tds));
+                res.append(Generateur.generer_expression(div.getFilsDroit(), tds));
+                res.append("POP(R2)").append("\r\n");
+                res.append("POP(R1)").append("\r\n");
+                res.append("DIV(R1,R2,R0)").append("\r\n");
+                res.append("PUSH(R0)").append("\r\n");
+                break;
+            case LIRE:
+                res.append("RDINT()").append("\t\n");
+                res.append("PUSH(R0)").append("\t\n");
+                break;
+            case APPEL:
+                res.append(Generateur.generer_appel((Fonction) n, tds));
+                break;
+        }
+        return res.toString();
     }
 
 
@@ -154,7 +208,7 @@ public class Generateur {
         .append(".include intio.uasm" + "\r\n");
         res.append(Generateur.generer_data(tds));
         for (Noeud n : p.getFils()) {
-            res.append(Generateur.generer_fonction(n, tds)).append("\r\n");
+            res.append(Generateur.generer_fonction((Fonction) n, tds)).append("\r\n");
         }
         res.append("debut:\r\n" +
                 "\tCALL(main)\r\n" +
@@ -181,10 +235,10 @@ public class Generateur {
         StringBuilder res = new StringBuilder();
         switch (n.getCat()){
             case AFF:
-                res.append(Generateur.generer_affectation((Affectation) n)).append("\r\n");
+                res.append(Generateur.generer_affectation((Affectation) n, tds)).append("\r\n");
                 break;
             case ECR:
-                res.append(Generateur.generer_ecrire((Ecrire) n)).append("\r\n");
+                res.append(Generateur.generer_ecrire((Ecrire) n, tds)).append("\r\n");
                 break;
             case SI:
                 res.append(Generateur.generer_si((Si) n, tds)).append("\r\n");
@@ -206,8 +260,8 @@ public class Generateur {
         return null;
     }
 
-    public static String generer_ecrire(Ecrire n){
-        return Generateur.generer_expression(n.getLeFils()) +
+    public static String generer_ecrire(Ecrire n, TDS tds){
+        return Generateur.generer_expression(n.getLeFils(), tds) +
                 "POP(R0)" + "\r\n" +
                 "WRINT()" + "\r\n";
     }
@@ -242,7 +296,7 @@ public class Generateur {
         if(!sf.getType().equalsIgnoreCase("void")){
             res.append("ALLOCATE(1)").append("\r\n");
             for (Noeud n : a.getFils()){
-                res.append(Generateur.generer_expression(n));
+                res.append(Generateur.generer_expression(n, tds));
             }
             res.append("CALL(").append(a.getLabel()).append(")").append("\r\n");
             res.append("DEALLOCATE(").append(sf.getNbParam()).append(")").append("\r\n");
@@ -273,7 +327,7 @@ public class Generateur {
     public static String generer_retour(Retour r, TDS tds){
         StringBuilder res = new StringBuilder();
         SymboleFonction sf = tds.getFonctionByName(r.getLeFils().getLabel());
-        res.append(Generateur.generer_expression(r.getLeFils()));
+        res.append(Generateur.generer_expression(r.getLeFils(), tds));
         int offset = 1 + sf.getNbParam();
         res.append("POP(R0)").append("\r\n");
         res.append("PUTFRAME(R0,").append(-4*offset).append(")").append("\r\n");
