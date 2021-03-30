@@ -45,7 +45,10 @@ public abstract class Symboles {
     }
 
     public Integer getNbBloc() {
-        return nbBloc;
+        if(this.nbBloc == null){
+            return 0;
+        }
+        return this.nbBloc;
     }
 
     public void setNbBloc(Integer nbBloc) {

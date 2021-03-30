@@ -72,7 +72,7 @@ if "%JAVACMD%"=="" set JAVACMD=java
 
 if "%REPO%"=="" set REPO=%BASEDIR%\repo
 
-set CLASSPATH="%BASEDIR%"\etc;"%REPO%"\fr\ul\miage\arbre\0.0.4\arbre-0.0.4.jar;"%REPO%"\fr\ul\miage\TDS\1.0-SNAPSHOT\TDS-1.0-SNAPSHOT.jar;"%REPO%"\fr\ul\miage\ASM\1.0-SNAPSHOT\ASM-1.0-SNAPSHOT.jar
+set CLASSPATH="%BASEDIR%"\etc;"%REPO%"\fr\ul\miage\arbre\0.0.4\arbre-0.0.4.jar;"%REPO%"\fr\ul\miage\TDS\1.0-SNAPSHOT\TDS-1.0-SNAPSHOT.jar;"%REPO%"\org\jetbrains\annotations\20.1.0\annotations-20.1.0.jar;"%REPO%"\fr\ul\miage\ASM\1.0-SNAPSHOT\ASM-1.0-SNAPSHOT.jar
 
 set ENDORSED_DIR=
 if NOT "%ENDORSED_DIR%" == "" set CLASSPATH="%BASEDIR%"\%ENDORSED_DIR%\*;%CLASSPATH%

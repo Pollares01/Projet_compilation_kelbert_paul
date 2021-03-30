@@ -1,0 +1,21 @@
+package fr.ul.miage.expression;
+
+terminal ADD, SUB, MUL, DIV, PO, PF;
+terminal NUM;
+
+non terminal langage, expression, facteur, atome;
+
+start with langage;
+langage ::= expression
+    ;
+expression ::= expression ADD facteur
+    | expression SUB facteur
+    | facteur
+    ;
+facteur ::= facteur MUL atome
+    | facteur DIV atome
+    | atome
+    ;
+atome ::= NUM
+    | PO expression PF
+    ;

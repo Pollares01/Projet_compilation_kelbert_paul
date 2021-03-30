@@ -39,22 +39,22 @@ public class Main {
                     symboles.add(new SymboleFonction("main", "void", "fonction", null, null));
                     TDS tds = new TDS(symboles);
 
-                    Noeud prog = new Prog();
+                    Prog prog = new Prog();
                     prog.ajouterUnFils(new Fonction("main"));
                     TxtAfficheur.afficher(prog);
 
                     TDS.afficherTDS(tds);
 
-                    System.out.println(Generateur.genererASM(prog, new StringBuilder()));
+                    String asm = Generateur.generer_programme(prog, tds);
+                    System.out.println(asm);
 
                     try {
                         PrintWriter pw = new PrintWriter("exemple1.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog, new StringBuilder()));
+                        pw.println(asm);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
 
                     break;
                 case "2":
@@ -68,16 +68,17 @@ public class Main {
                     symboles2.add(new SymboleIdentifiant("l", "int", "global", null, null, null));
                     TDS tds2 = new TDS(symboles2);
 
-                    Noeud prog2 = new Prog();
+                    Prog prog2 = new Prog();
                     prog2.ajouterUnFils(new Fonction("main"));
                     TxtAfficheur.afficher(prog2);
 
                     TDS.afficherTDS(tds2);
-                    System.out.println(Generateur.genererASM(prog2, new StringBuilder()));
+                    String asm2 = Generateur.generer_programme(prog2, tds2);
+                    System.out.println(asm2);
 
                     try {
                         PrintWriter pw = new PrintWriter("exemple2.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog2, new StringBuilder()));
+                        pw.println(asm2);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -94,7 +95,7 @@ public class Main {
                     symboles3.add(new SymboleIdentifiant("l", "int", "global", null, null, null));
                     TDS tds3 = new TDS(symboles3);
 
-                    Noeud prog3 = new Prog();
+                    Prog prog3 = new Prog();
                     Noeud main3 = new Fonction("main");
 
                     Affectation aff3_1 = new Affectation();
@@ -112,8 +113,6 @@ public class Main {
                     aff3_2.setFilsGauche(new Idf(tds3.getSymByName("l")));
                     aff3_2.setFilsDroit(plus3);
 
-                    System.out.println(Generateur.generer_affectation(aff3_2, tds3));
-
                     main3.ajouterUnFils(aff3_1);
                     main3.ajouterUnFils(aff3_2);
                     prog3.ajouterUnFils(main3);
@@ -122,10 +121,12 @@ public class Main {
                     TDS.afficherTDS(tds3);
 
 
-                    System.out.println(Generateur.genererASM(prog3, new StringBuilder()));
+                    String asm3 = Generateur.generer_programme(prog3, tds3);
+                    System.out.println(asm3);
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple3.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog3, new StringBuilder()));
+                        pw.println(asm3);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -140,7 +141,7 @@ public class Main {
                     symboles4.add(new SymboleIdentifiant("j", "int", "global", 20, null, null));
                     TDS tds4 = new TDS(symboles4);
 
-                    Noeud prog4 = new Prog();
+                    Prog prog4 = new Prog();
                     Noeud main4 = new Fonction("main");
 
                     Affectation aff4 = new Affectation();
@@ -159,10 +160,12 @@ public class Main {
                     TxtAfficheur.afficher(prog4);
 
                     TDS.afficherTDS(tds4);
-                    System.out.println(Generateur.genererASM(prog4, new StringBuilder()));
+                    String asm4 = Generateur.generer_programme(prog4, tds4);
+                    System.out.println(asm4);
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple4.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog4, new StringBuilder()));
+                        pw.println(asm4);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -176,7 +179,7 @@ public class Main {
                     symboles5.add(new SymboleIdentifiant("i", "int", "global", null, null, null));
                     TDS tds5 = new TDS(symboles5);
 
-                    Noeud prog5 = new Prog();
+                    Prog prog5 = new Prog();
                     Noeud main5 = new Fonction("main");
 
                     Affectation aff5 = new Affectation();
@@ -208,10 +211,12 @@ public class Main {
                     TxtAfficheur.afficher(prog5);
 
                     TDS.afficherTDS(tds5);
-                    System.out.println(Generateur.genererASM(prog5, new StringBuilder()));
+                    String asm5 = Generateur.generer_programme(prog5, tds5);
+                    System.out.println(asm5);
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple5.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog5, new StringBuilder()));
+                        pw.println(asm5);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -226,7 +231,7 @@ public class Main {
                     symboles6.add(new SymboleIdentifiant("n", "int", "global", 5, null, null));
                     TDS tds6 = new TDS(symboles6);
 
-                    Noeud prog6 = new Prog();
+                    Prog prog6 = new Prog();
                     Noeud main6 = new Fonction("main");
 
                     Affectation aff6 = new Affectation();
@@ -234,9 +239,10 @@ public class Main {
                     aff6.setFilsDroit(new Const(0));
 
                     Idf i6 = new Idf(tds6.getSymByName("i"));
-                    Superieur sup6 = new Superieur();
-                    sup6.setFilsGauche(i6);
-                    sup6.setFilsDroit(i6);
+                    Idf i6_2 = new Idf(tds6.getSymByName("n"));
+                    Inferieur inf6 = new Inferieur();
+                    inf6.setFilsGauche(i6);
+                    inf6.setFilsDroit(i6_2);
                     Bloc bloc6_tq = new Bloc();
                     Ecrire ecrire6 = new Ecrire();
                     Plus plus6 = new Plus();
@@ -249,7 +255,7 @@ public class Main {
                     bloc6_tq.ajouterUnFils(ecrire6);
                     bloc6_tq.ajouterUnFils(Affectation6);
                     TantQue tq6 = new TantQue(1);
-                    tq6.setCondition(sup6);
+                    tq6.setCondition(inf6);
                     tq6.setBloc(bloc6_tq);
 
                     main6.ajouterUnFils(aff6);
@@ -258,10 +264,12 @@ public class Main {
                     TxtAfficheur.afficher(prog6);
 
                     TDS.afficherTDS(tds6);
-                    System.out.println(Generateur.genererASM(prog6, new StringBuilder()));
+                    String asm6 = Generateur.generer_programme(prog6, tds6);
+                    System.out.println(asm6);
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple6.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog6, new StringBuilder()));
+                        pw.println(asm6);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -280,7 +288,7 @@ public class Main {
                     symboles7.add(new SymboleIdentifiant("y", "int", "local", null, 1, sF7));
                     TDS tds7 = new TDS(symboles7);
 
-                    Noeud prog7 = new Prog();
+                    Prog prog7 = new Prog();
                     Noeud main7 = new Fonction("main");
                     Noeud f7 = new Fonction("f");
 
@@ -322,10 +330,12 @@ public class Main {
                     TxtAfficheur.afficher(prog7);
 
                     TDS.afficherTDS(tds7);
-                    System.out.println(Generateur.genererASM(prog7, new StringBuilder()));
+                    String asm7 = Generateur.generer_programme(prog7, tds7);
+                    System.out.println(asm7);
+
                     try {
                         PrintWriter pw = new PrintWriter("exemple7.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog7, new StringBuilder()));
+                        pw.println(asm7);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -344,7 +354,7 @@ public class Main {
                     symboles8.add(new SymboleIdentifiant("j", "int", "param", null, 1, sF8));
                     TDS tds8 = new TDS(symboles8);
 
-                    Noeud prog8 = new Prog();
+                    Prog prog8 = new Prog();
                     Noeud main8 = new Fonction("main");
                     Noeud f8 = new Fonction("f");
 
@@ -386,18 +396,16 @@ public class Main {
                     TxtAfficheur.afficher(prog8);
 
                     TDS.afficherTDS(tds8);
-                    System.out.println(Generateur.genererASM(prog8, new StringBuilder()));
-
+                    String asm8 = Generateur.generer_programme(prog8, tds8);
+                    System.out.println(asm8);
 
                     try {
                         PrintWriter pw = new PrintWriter("exemple8.asm", StandardCharsets.UTF_8);
-                        pw.println(Generateur.genererASM(prog8, new StringBuilder()));
+                        pw.println(asm8);
                         pw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
                     break;
                 case "9":
                     stop = true;
