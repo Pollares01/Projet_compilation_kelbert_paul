@@ -1,4 +1,5 @@
 import fr.ul.miage.arbre.*;
+import main.java.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;

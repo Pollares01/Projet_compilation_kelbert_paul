@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>expression</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1</version>
 
     <properties>
         <!-- Le code source en UTF8 -->
@@ -59,20 +59,18 @@
                     <!-- mvn install ou assembly:single -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.3.0</version>
+                    <configuration>
+                        <descriptors>
+                            <descriptor>zip.xml</descriptor>
+                        </descriptors>
+                    </configuration>
                     <executions>
                         <execution>
-                            <id>make-zip</id>
                             <phase>install</phase>
                             <goals>
-                                <goal>single</goal>
+                                <goal>assemble</goal>
                             </goals>
-                            <configuration>
-                                <descriptors>
-                                    <descriptor>zip.xml</descriptor>
-                                </descriptors>
-                                <appendAssemblyId>true</appendAssemblyId>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -124,6 +122,12 @@
         </pluginManagement>
     </build>
     <dependencies>
+        <!-- Utiliser arbre.jar -->
+        <dependency>
+            <groupId>fr.ul.miage</groupId>
+            <artifactId>arbre</artifactId>
+            <version>0.0.4</version>
+        </dependency>
         <!-- Utiliser CUP 0.11b -->
         <dependency>
             <groupId>com.github.vbmacher</groupId>

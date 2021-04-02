@@ -1,21 +1,55 @@
+/* Grammaire CUP du projet Expression */
 package fr.ul.miage.expression;
+import fr.ul.miage.arbre.*;
 
-terminal ADD, SUB, MUL, DIV, PO, PF;
-terminal NUM;
+/* code java */
+parser code {:
+    public Noeud resultat = null ;
+:}
 
-non terminal langage, expression, facteur, atome;
+/* la grammaire */
+/* 1) terminaux */
+terminal ADD , SUB , MUL , DIV , PO , PF ;
+terminal Integer NUM ;
 
+/* 2) non terminaux */
+non terminal langage;
+non terminal Noeud expression, facteur, atome;
+
+/* AxiomeStart */
 start with langage;
-langage ::= expression
+
+/*-------------------------------*/
+/* 4) règles de production */
+langage ::= expression : e {: resultat = e ; :}
     ;
-expression ::= expression ADD facteur
-    | expression SUB facteur
-    | facteur
+
+expression ::= expression : e ADD facteur : f {:
+                        RESULT = new Plus();
+                        ((Plus)RESULT).setFilsGauche(e) ;
+                        ((Plus)RESULT).setFilsDroit(f) ;
+                            :}
+    | expression : e SUB facteur : f {:
+                            RESULT = new Moins();
+                            ((Moins)RESULT).setFilsGauche(e);
+                            ((Moins)RESULT).setFilsDroit(f);
+                        :}
+    | facteur : f {: RESULT = f ; :}
     ;
-facteur ::= facteur MUL atome
-    | facteur DIV atome
-    | atome
+
+facteur ::= facteur : f MUL atome : a {:
+                            RESULT = new Multiplication();
+                            ((Multiplication)RESULT).setFilsGauche(f);
+                            ((Multiplication)RESULT).setFilsDroit(a);
+                        :}
+    | facteur : f DIV atome : a {:
+                            RESULT = new Division () ;
+                            ((Division)RESULT).setFilsGauche(f);
+                            ((Division)RESULT).setFilsDroit(a);
+                        :}
+    | atome : a {: RESULT = a ; :}
     ;
-atome ::= NUM
-    | PO expression PF
+
+atome ::= NUM : n {: RESULT = new Const(n); :}
+    | PO expression : e PF {: RESULT = e; :}
     ;

@@ -5,6 +5,7 @@
 
 package fr.ul.miage.expression;
 
+import fr.ul.miage.arbre.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -110,6 +111,10 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   public int error_sym() {return 1;}
 
 
+
+    public Noeud resultat = null ;
+
+
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$ParserCup$actions {
@@ -152,7 +157,10 @@ class CUP$ParserCup$actions {
           case 1: // langage ::= expression 
             {
               Object RESULT =null;
-
+		int eleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud e = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		 resultat = e ; 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("langage",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -160,8 +168,18 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // expression ::= expression ADD facteur 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).right;
+		Noeud e = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).value;
+		int fleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud f = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		
+                        RESULT = new Plus();
+                        ((Plus)RESULT).setFilsGauche(e) ;
+                        ((Plus)RESULT).setFilsDroit(f) ;
+                            
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("expression",1, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -169,8 +187,18 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // expression ::= expression SUB facteur 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).right;
+		Noeud e = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).value;
+		int fleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud f = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		
+                            RESULT = new Moins();
+                            ((Moins)RESULT).setFilsGauche(e);
+                            ((Moins)RESULT).setFilsDroit(f);
+                        
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("expression",1, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -178,8 +206,11 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // expression ::= facteur 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int fleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud f = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		 RESULT = f ; 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("expression",1, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -187,8 +218,18 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // facteur ::= facteur MUL atome 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int fleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).right;
+		Noeud f = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud a = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		
+                            RESULT = new Multiplication();
+                            ((Multiplication)RESULT).setFilsGauche(f);
+                            ((Multiplication)RESULT).setFilsDroit(a);
+                        
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("facteur",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -196,8 +237,18 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // facteur ::= facteur DIV atome 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int fleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).left;
+		int fright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).right;
+		Noeud f = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud a = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		
+                            RESULT = new Division () ;
+                            ((Division)RESULT).setFilsGauche(f);
+                            ((Division)RESULT).setFilsDroit(a);
+                        
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("facteur",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -205,8 +256,11 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 7: // facteur ::= atome 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Noeud a = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		 RESULT = a ; 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("facteur",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -214,8 +268,11 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // atome ::= NUM 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int nleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Integer n = (Integer)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		 RESULT = new Const(n); 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("atome",3, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
@@ -223,8 +280,11 @@ class CUP$ParserCup$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // atome ::= PO expression PF 
             {
-              Object RESULT =null;
-
+              Noeud RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-1)).right;
+		Noeud e = (Noeud)((java_cup.runtime.Symbol) CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-1)).value;
+		 RESULT = e; 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("atome",3, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;

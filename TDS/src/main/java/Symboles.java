@@ -1,3 +1,5 @@
+package main.java;
+
 public abstract class Symboles {
 
     protected String nom, type, cat;

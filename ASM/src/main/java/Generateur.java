@@ -1,4 +1,7 @@
 import fr.ul.miage.arbre.*;
+import main.java.SymboleFonction;
+import main.java.Symboles;
+import main.java.TDS;
 
 
 public class Generateur {
@@ -158,7 +161,7 @@ public class Generateur {
                 if(idf.getVal() == null){
                     res.append(idf.getNom()).append(": \tLONG(").append(0).append(")\r\n");
                 } else {
-                    res.append(idf.getNom()).append(": \tLONG(").append(idf.val).append(")\r\n");
+                    res.append(idf.getNom()).append(": \tLONG(").append(idf.getVal()).append(")\r\n");
                 }
             }
         }
