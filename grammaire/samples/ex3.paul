@@ -1,0 +1,10 @@
+entier i;
+i = 10;
+entier j;
+j = 20;
+entier k;
+entier l;
+fonction main() {
+    k = 2;
+    l = i + (j*3);
+}

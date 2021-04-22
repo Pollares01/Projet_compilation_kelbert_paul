@@ -1,0 +1,88 @@
+// exemple 1
+fonction main() {
+
+}
+
+// exemple 2
+entier i;
+i = 10;
+entier j;
+j = 20;
+entier k;
+entier l;
+fonction main() {
+
+}
+
+// exemple 3
+entier i;
+i = 10;
+entier j;
+j = 20;
+entier k;
+entier l;
+fonction main() {
+    k = 2;
+    l = i + (j*3);
+}
+
+// exemple 4
+entier i;
+entier j;
+j = 20;
+fonction main() {
+    i = input();
+    output(i+j);
+}
+
+// exemple 5
+entier i;
+fonction main() {
+    i = input();
+    si (i > 10){
+        output(1);
+    } sinon {
+        output(2);
+    }
+}
+
+// exemple 6
+entier i;
+entier n;
+n = 5;
+fonction main() {
+    i = 0;
+    tq(i<n) {
+        output(i);
+        i = i+1;
+    }
+}
+
+// exemple 7
+entier a;
+fonction main() {
+    a = f(3);
+    output(a);
+}
+
+fonction f(i) {
+    entier x;
+    x = 1;
+    entier y;
+    y = 1;
+    a = i + x + y;
+    retourner a;
+}
+
+// exemple 8
+entier a;
+fonction main() {
+    a = f(1,2);
+    output(a);
+}
+
+fonction f(i, j) {
+    entier x;
+    x = i + j;
+    retourner x + 10;
+}

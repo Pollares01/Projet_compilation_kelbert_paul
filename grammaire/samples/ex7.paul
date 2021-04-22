@@ -1,0 +1,14 @@
+entier a;
+fonction main() {
+    a = f(3);
+    output(a);
+}
+
+fonction f(i) {
+    entier x;
+    x = 1;
+    entier y;
+    y = 1;
+    a = i + x + y;
+    retourner a;
+}

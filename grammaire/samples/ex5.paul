@@ -1,0 +1,9 @@
+entier i;
+fonction main() {
+    i = input();
+    si (i > 10){
+        output(1);
+    } sinon {
+        output(2);
+    }
+}

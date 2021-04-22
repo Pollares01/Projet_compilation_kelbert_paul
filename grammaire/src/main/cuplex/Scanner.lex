@@ -28,8 +28,13 @@ COM        =    "//"[^\n]*\n
 "/"            { return new Symbol(Sym.DIV);}
 "("            { return new Symbol(Sym.PO);}
 ")"            { return new Symbol(Sym.PF);}
-
-
+"="            { return new Symbol(Sym.AFF);}
+"entier"       { return new Symbol(Sym.ENTIER);}
+"fonction"     { return new Symbol(Sym.FONCTION);}
+"output"       { return new Symbol(Sym.OUTPUT);}
+"input"        { return new Symbol(Sym.INPUT);}
+"retourner"    { return new Symbol(Sym.RETURN);}
+"tq"           { return new Symbol(Sym.TQ);}
 
 {NUM}          { return new Symbol(Sym.NUM, new Integer(yytext()));}
 {SEP}          {;}
