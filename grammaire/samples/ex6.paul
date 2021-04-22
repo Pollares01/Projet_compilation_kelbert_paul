@@ -1,7 +1,7 @@
 entier i;
 entier n;
 n = 5;
-fonction main() {
+fonction void main() {
     i = 0;
     tq(i<n) {
         output(i);

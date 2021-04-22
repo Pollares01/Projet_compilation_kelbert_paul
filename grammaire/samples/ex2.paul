@@ -4,6 +4,6 @@ entier j;
 j = 20;
 entier k;
 entier l;
-fonction main() {
+fonction void main() {
 
 }

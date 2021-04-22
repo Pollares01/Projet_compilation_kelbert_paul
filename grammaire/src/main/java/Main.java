@@ -1,6 +1,7 @@
-import fr.ul.miage.expression.ParserCup;
-import generated.fr.ul.miage.expression.Yylex;
 import fr.ul.miage.arbre.*;
+import generated.fr.ul.miage.grammaire.ParserCup;
+import generated.fr.ul.miage.grammaire.Yylex;
+
 import java.io.FileReader;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -11,15 +12,14 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        while(true){
             System.out.print("Quel fichier voulez vous choisir ? : ");
-            String filename = "samples/e" + sc.nextLine() + ".exp";
+            String filename = "samples/ex" + sc.nextLine() + ".paul";
             try {
                 Yylex scanner = new Yylex(new FileReader(filename));
                 ParserCup pc = new ParserCup(scanner);
                 pc.parse();
 //                TxtAfficheur.afficher(pc.resultat);
-                System.out.println("OK\n");
+                System.out.println("OK");
             } catch (Exception e) {
                 LOG.severe(e.getMessage());
                 System.out.println("PAS OK");
@@ -27,7 +27,6 @@ public class Main {
             }
             LOG.info("Terminé");
             System.out.println("\n\n");
-        }
 
 
     }

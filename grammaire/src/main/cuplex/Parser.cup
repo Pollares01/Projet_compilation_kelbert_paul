@@ -1,56 +1,115 @@
 /* Grammaire CUP du projet Expression */
-package fr.ul.miage.grammaire;
+package generated.fr.ul.miage.grammaire;
 import fr.ul.miage.arbre.*;
+import java.util.*;
 
 /* code java */
-parser code {:
-    public Noeud resultat = null ;
-:}
+parser code {: :}
 
 /* la grammaire */
 /* 1) terminaux */
-terminal ADD , SUB , MUL , DIV , PO , PF ,
-    ENTIER , FONCTION , OUTPUT, INPUT, RETURN, TQ, AFF;
+terminal ADD , SUB , MUL , DIV , PO , PF , ENTIER , FONCTION ,
+                    OUTPUT , INPUT , RETURN , TQ , AFF ,
+                    TYPE, AO, AF, FINLIGNE, IF, ELSE,
+                    SUP, SUPE, INF, INFE, EGAL, DIFFERENT,
+                    SEPARATEURPARAM;
 terminal Integer NUM ;
+terminal String IDF;
 
 /* 2) non terminaux */
-non terminal langage;
-non terminal Noeud expression, facteur, atome;
-
+non terminal app;
+non terminal Noeud declaration_fonction,
+                    declaration_variable,
+                    definition_ligne,
+                    declaration_expression,
+                    declaration,
+                    declaration_facteur,
+                    declaration_condition,
+                    declaration_appel,
+                    parametre,
+                    parametre_fonction,
+                    atome;
+non terminal ArrayList<Noeud> liste_inscructions,liste_parametres_fonction, liste_arguments, liste_parametres;
 /* AxiomeStart */
-start with langage;
+start with app;
 
 /*-------------------------------*/
 /* 4) règles de production */
-langage ::= expression : e {: resultat = e ; :}
+app ::= liste_inscructions
+    |
     ;
 
-expression ::= expression : e ADD facteur : f {:
-                        RESULT = new Plus();
-                        ((Plus)RESULT).setFilsGauche(e) ;
-                        ((Plus)RESULT).setFilsDroit(f) ;
-                            :}
-    | expression : e SUB facteur : f {:
-                            RESULT = new Moins();
-                            ((Moins)RESULT).setFilsGauche(e);
-                            ((Moins)RESULT).setFilsDroit(f);
-                        :}
-    | facteur : f {: RESULT = f ; :}
+liste_inscructions ::= declaration liste_inscructions
+    | declaration
     ;
 
-facteur ::= facteur : f MUL atome : a {:
-                            RESULT = new Multiplication();
-                            ((Multiplication)RESULT).setFilsGauche(f);
-                            ((Multiplication)RESULT).setFilsDroit(a);
-                        :}
-    | facteur : f DIV atome : a {:
-                            RESULT = new Division () ;
-                            ((Division)RESULT).setFilsGauche(f);
-                            ((Division)RESULT).setFilsDroit(a);
-                        :}
-    | atome : a {: RESULT = a ; :}
+liste_arguments ::= definition_ligne liste_arguments
+    | definition_ligne
     ;
 
-atome ::= NUM : n {: RESULT = new Const(n); :}
-    | PO expression : e PF {: RESULT = e; :}
+declaration ::= declaration_fonction
+    | declaration_variable
+    ;
+
+declaration_fonction ::= FONCTION TYPE IDF PO PF AO AF
+    | FONCTION TYPE IDF PO PF AO liste_arguments AF
+    | FONCTION TYPE IDF PO liste_parametres_fonction PF AO liste_arguments AF
+    | FONCTION ENTIER IDF PO liste_parametres_fonction PF AO liste_arguments AF
+    ;
+
+declaration_variable ::= ENTIER IDF FINLIGNE
+    ;
+
+definition_ligne ::= IDF AFF declaration_expression FINLIGNE
+    | IDF AFF INPUT PO PF FINLIGNE
+    | declaration_variable
+    | OUTPUT PO declaration_expression PF FINLIGNE
+    | IF PO declaration_condition PF AO liste_arguments AF
+    | IF PO declaration_condition PF AO liste_arguments AF ELSE AO liste_arguments AF
+    | TQ PO declaration_condition PF AO liste_arguments AF
+    | IDF AFF declaration_appel FINLIGNE
+    | RETURN PO declaration_expression PF FINLIGNE
+    ;
+
+declaration_condition ::= declaration_expression SUP declaration_expression
+    | declaration_expression SUPE declaration_expression
+    | declaration_expression INF declaration_expression
+    | declaration_expression INFE declaration_expression
+    | declaration_expression EGAL declaration_expression
+    | declaration_expression DIFFERENT declaration_expression
+    ;
+
+declaration_appel ::= IDF PO PF
+    | IDF PO liste_parametres PF
+    ;
+
+liste_parametres_fonction ::= parametre_fonction liste_parametres_fonction
+    | parametre_fonction
+    ;
+
+parametre_fonction ::= ENTIER IDF
+    | ENTIER IDF SEPARATEURPARAM
+    ;
+
+liste_parametres ::= parametre liste_parametres
+    | parametre
+    ;
+
+parametre ::= declaration_expression
+    | declaration_expression SEPARATEURPARAM
+    ;
+
+declaration_expression ::= declaration_expression ADD declaration_facteur
+    | declaration_expression SUB declaration_facteur
+    | declaration_facteur
+    ;
+
+declaration_facteur ::= declaration_facteur MUL atome
+    | declaration_facteur DIV atome
+    | atome
+    ;
+
+atome ::= NUM
+    | IDF
+    | PO declaration_expression PF
     ;

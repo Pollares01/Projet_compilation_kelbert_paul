@@ -1,11 +1,11 @@
 entier a;
-fonction main() {
+fonction void main() {
     a = f(1,2);
     output(a);
 }
 
-fonction f(i, j) {
+fonction entier f(entier i, entier j) {
     entier x;
     x = i + j;
-    retourner x + 10;
+    retourner (x + 10);
 }

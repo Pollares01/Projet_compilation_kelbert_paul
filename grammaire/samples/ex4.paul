@@ -1,7 +1,7 @@
 entier i;
 entier j;
 j = 20;
-fonction main() {
+fonction void main() {
     i = input();
     output(i+j);
 }

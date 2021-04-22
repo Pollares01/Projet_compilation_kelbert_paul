@@ -1,5 +1,5 @@
 entier i;
-fonction main() {
+fonction void main() {
     i = input();
     si (i > 10){
         output(1);
