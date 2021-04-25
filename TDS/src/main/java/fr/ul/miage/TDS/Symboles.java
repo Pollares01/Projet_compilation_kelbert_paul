@@ -1,4 +1,4 @@
-package main.java;
+package fr.ul.miage.TDS;
 
 public abstract class Symboles {
 

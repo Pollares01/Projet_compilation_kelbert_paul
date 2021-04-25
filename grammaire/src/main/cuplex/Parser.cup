@@ -1,25 +1,33 @@
 /* Grammaire CUP du projet Expression */
 package generated.fr.ul.miage.grammaire;
 import fr.ul.miage.arbre.*;
+import fr.ul.miage.TDS.*;
 import java.util.*;
 
 /* code java */
-parser code {: :}
+parser code {:
+     public Noeud resultat = null;
+     public ArrayList<Symboles> listSymbols = new ArrayList<>();
+     public TDS tds = new TDS(listSymbols);
+     public int countSi = 1;
+     public int countTq = 1;
+:}
 
 /* la grammaire */
 /* 1) terminaux */
 terminal ADD , SUB , MUL , DIV , PO , PF , ENTIER , FONCTION ,
                     OUTPUT , INPUT , RETURN , TQ , AFF ,
-                    TYPE, AO, AF, FINLIGNE, IF, ELSE,
+                    AO, AF, FINLIGNE, IF, ELSE,
                     SUP, SUPE, INF, INFE, EGAL, DIFFERENT,
                     SEPARATEURPARAM;
 terminal Integer NUM ;
-terminal String IDF;
+terminal String IDF, TYPE;
 
 /* 2) non terminaux */
 non terminal app;
 non terminal Noeud declaration_fonction,
                     declaration_variable,
+                    declaration_variable_globale,
                     definition_ligne,
                     declaration_expression,
                     declaration,
@@ -35,81 +43,257 @@ start with app;
 
 /*-------------------------------*/
 /* 4) règles de production */
-app ::= liste_inscructions
+app ::= liste_inscructions:l {:
+                resultat = new Prog();
+                resultat.ajouterDesFils(l);
+            :}
     |
     ;
 
-liste_inscructions ::= declaration liste_inscructions
-    | declaration
+liste_inscructions ::= declaration:d liste_inscructions:li {:
+                if(d!=null){
+                    li.add(d);
+                }
+                RESULT = li;
+            :}
+    | declaration:d {:
+                RESULT = new ArrayList<Noeud>();
+                if(d!=null){
+                    RESULT.add(d);
+                }
+            :}
     ;
 
-liste_arguments ::= definition_ligne liste_arguments
-    | definition_ligne
+liste_arguments ::= definition_ligne:dl liste_arguments:la {:
+                if(dl!=null){
+                    la.add(dl);
+                }
+                RESULT = la;
+            :}
+    | definition_ligne:dl {:
+                RESULT = new ArrayList<Noeud>();
+                if(dl!=null){
+                    RESULT.add(dl);
+                }
+            :}
     ;
 
-declaration ::= declaration_fonction
+declaration ::= declaration_fonction:df {:
+                RESULT = df;
+            :}
+    | declaration_variable_globale:dvg {:
+                RESULT = dvg;
+            :}
+    ;
+
+declaration_fonction ::= FONCTION TYPE:type IDF:nom PO PF AO AF {:
+                listSymbols.add(new SymboleFonction(nom, "void", "fonction", null, null) );
+                RESULT = new Fonction(nom);
+            :}
+    | FONCTION TYPE:type IDF:nom PO PF AO liste_arguments:la AF{:
+                listSymbols.add(new SymboleFonction(nom, "void", "fonction", null, null));
+                RESULT = new Fonction(nom);
+                RESULT.ajouterDesFils(la);
+            :}
+    | FONCTION TYPE:type IDF:nom PO liste_parametres_fonction PF AO liste_arguments:la AF {:
+                listSymbols.add(new SymboleFonction(nom, "void", "fonction", null, null));
+                RESULT = new Fonction(nom);
+                RESULT.ajouterDesFils(la);
+            :}
+    | FONCTION ENTIER IDF:nom PO liste_parametres_fonction PF AO liste_arguments:la AF {:
+                listSymbols.add(new SymboleFonction(nom, "int", "fonction", null, null));
+                RESULT = new Fonction(nom);
+                RESULT.ajouterDesFils(la);
+            :}
+    ;
+
+declaration_variable ::= ENTIER IDF:idf FINLIGNE
+    | ENTIER IDF AFF NUM FINLIGNE
+    ;
+
+declaration_variable_globale ::= ENTIER IDF:nom FINLIGNE {:
+                listSymbols.add(new SymboleIdentifiant(nom, "int", "globale", null, null, null));
+            :}
+    | ENTIER IDF:nom AFF NUM:valeur FINLIGNE{:
+                 listSymbols.add(new SymboleIdentifiant(nom, "int", "globale", valeur, null, null));
+             :}
+    ;
+
+definition_ligne ::= IDF:nom AFF declaration_expression:de FINLIGNE {:
+                RESULT = new Affectation();
+                ((Affectation)RESULT).setFilsDroit(new Idf(tds.getSymByName(nom)));
+                ((Affectation)RESULT).setFilsGauche(de);
+            :}
+    | IDF:nom AFF INPUT PO PF FINLIGNE {:
+                RESULT=new Affectation();
+                ((Affectation)RESULT).setFilsGauche(new Idf(tds.getIdfByName(nom)));
+                ((Affectation)RESULT).setFilsDroit(new Lire());
+            :}
     | declaration_variable
+    | OUTPUT PO declaration_expression:de PF FINLIGNE {:
+                RESULT=new Ecrire();
+                ((Ecrire)RESULT).ajouterUnFils(de);
+            :}
+    | IF PO declaration_condition:dc PF AO liste_arguments:la AF {:
+                RESULT=new Si(countSi);
+                ((Si)RESULT).setCondition(dc);
+                Bloc bloc = new Bloc();
+                bloc.ajouterDesFils(la);
+                ((Si)RESULT).setBlocAlors(bloc);
+                countSi++;
+            :}
+    | IF PO declaration_condition:dc PF AO liste_arguments:alors AF ELSE AO liste_arguments:sinon AF {:
+                RESULT=new Si(countSi);
+                ((Si)RESULT).setCondition(dc);
+                Bloc bloc = new Bloc();
+                bloc.ajouterDesFils(alors);
+                ((Si)RESULT).setBlocAlors(bloc);
+                Bloc bloc2 = new Bloc();
+                bloc2.ajouterDesFils(sinon);
+                ((Si)RESULT).setBlocSinon(bloc2);
+                countSi++;
+            :}
+    | TQ PO declaration_condition:dc PF AO liste_arguments:la AF {:
+               RESULT=new TantQue(countTq);
+               ((TantQue)RESULT).setCondition(dc);
+               Bloc bloc = new Bloc();
+               bloc.ajouterDesFils(la);
+               ((TantQue)RESULT).setBloc(bloc);
+               countTq++;
+           :}
+    | IDF:nom AFF declaration_appel:da FINLIGNE {:
+                RESULT = new Affectation();
+                ((Affectation)RESULT).setFilsDroit(new Idf(tds.getSymByName(nom)));
+                ((Affectation)RESULT).setFilsGauche(da);
+            :}
+    | RETURN PO declaration_expression:de PF FINLIGNE {:
+                RESULT = new Retour("f");
+                ((Retour)RESULT).setLeFils(de);
+            :}
     ;
 
-declaration_fonction ::= FONCTION TYPE IDF PO PF AO AF
-    | FONCTION TYPE IDF PO PF AO liste_arguments AF
-    | FONCTION TYPE IDF PO liste_parametres_fonction PF AO liste_arguments AF
-    | FONCTION ENTIER IDF PO liste_parametres_fonction PF AO liste_arguments AF
+declaration_condition ::= declaration_expression:de1 SUP declaration_expression:de2 {:
+                RESULT= new Superieur();
+                ((Superieur)RESULT).setFilsGauche(de1);
+                ((Superieur)RESULT).setFilsDroit(de2);
+            :}
+    | declaration_expression:de1 SUPE declaration_expression:de2 {:
+                RESULT= new SuperieurEgal();
+                ((SuperieurEgal)RESULT).setFilsGauche(de1);
+                ((SuperieurEgal)RESULT).setFilsDroit(de2);
+            :}
+    | declaration_expression:de1 INF declaration_expression:de2 {:
+                RESULT= new Inferieur();
+                ((Inferieur)RESULT).setFilsGauche(de1);
+                ((Inferieur)RESULT).setFilsDroit(de2);
+            :}
+    | declaration_expression:de1 INFE declaration_expression:de2 {:
+                RESULT= new InferieurEgal();
+                ((InferieurEgal)RESULT).setFilsGauche(de1);
+                ((InferieurEgal)RESULT).setFilsDroit(de2);
+            :}
+    | declaration_expression:de1 EGAL declaration_expression:de2 {:
+                 RESULT= new Egal();
+                 ((Egal)RESULT).setFilsGauche(de1);
+                 ((Egal)RESULT).setFilsDroit(de2);
+             :}
+    | declaration_expression:de1 DIFFERENT declaration_expression:de2 {:
+                 RESULT= new Different();
+                 ((Different)RESULT).setFilsGauche(de1);
+                 ((Different)RESULT).setFilsDroit(de2);
+             :}
     ;
 
-declaration_variable ::= ENTIER IDF FINLIGNE
+declaration_appel ::= IDF:nom PO PF {:
+                RESULT = new Appel(nom);
+            :}
+    | IDF:nom PO liste_parametres:lp PF {:
+                 RESULT = new Appel(nom);
+                 ((Appel)RESULT).ajouterDesFils(lp);
+             :}
     ;
 
-definition_ligne ::= IDF AFF declaration_expression FINLIGNE
-    | IDF AFF INPUT PO PF FINLIGNE
-    | declaration_variable
-    | OUTPUT PO declaration_expression PF FINLIGNE
-    | IF PO declaration_condition PF AO liste_arguments AF
-    | IF PO declaration_condition PF AO liste_arguments AF ELSE AO liste_arguments AF
-    | TQ PO declaration_condition PF AO liste_arguments AF
-    | IDF AFF declaration_appel FINLIGNE
-    | RETURN PO declaration_expression PF FINLIGNE
+liste_parametres_fonction ::= parametre_fonction:pf liste_parametres_fonction:lpf {:
+                if(pf!=null){
+                    lpf.add(pf);
+                }
+                RESULT = lpf;
+            :}
+    | parametre_fonction:pf {:
+                RESULT = new ArrayList<Noeud>();
+                if(pf!=null){
+                    RESULT.add(pf);
+                }
+            :}
     ;
 
-declaration_condition ::= declaration_expression SUP declaration_expression
-    | declaration_expression SUPE declaration_expression
-    | declaration_expression INF declaration_expression
-    | declaration_expression INFE declaration_expression
-    | declaration_expression EGAL declaration_expression
-    | declaration_expression DIFFERENT declaration_expression
+parametre_fonction ::= ENTIER IDF:nom {:
+                listSymbols.add(new SymboleIdentifiant(nom, "int", "param", 0, 0, tds.getFonctionByName("f")));
+            :}
+    | ENTIER IDF:nom SEPARATEURPARAM {:
+             listSymbols.add(new SymboleIdentifiant(nom, "int", "param", 0, 0, tds.getFonctionByName("f")));
+         :}
     ;
 
-declaration_appel ::= IDF PO PF
-    | IDF PO liste_parametres PF
+liste_parametres ::= parametre:p liste_parametres:lp {:
+                if(p!=null){
+                    lp.add(p);
+                }
+                RESULT = lp;
+            :}
+    | parametre:p {:
+                RESULT = new ArrayList<Noeud>();
+                if(p!=null){
+                    RESULT.add(p);
+                }
+            :}
     ;
 
-liste_parametres_fonction ::= parametre_fonction liste_parametres_fonction
-    | parametre_fonction
+parametre ::= declaration_expression:de {:
+                RESULT = de;
+            :}
+    | declaration_expression:de SEPARATEURPARAM {:
+                RESULT = de;
+            :}
     ;
 
-parametre_fonction ::= ENTIER IDF
-    | ENTIER IDF SEPARATEURPARAM
+declaration_expression ::= declaration_expression:de ADD declaration_facteur:df {:
+                RESULT= new Plus();
+                ((Plus)RESULT).setFilsGauche(de);
+                ((Plus)RESULT).setFilsDroit(df);
+            :}
+    | declaration_expression:de SUB declaration_facteur:df {:
+                RESULT= new Moins();
+                ((Moins)RESULT).setFilsGauche(de);
+                ((Moins)RESULT).setFilsDroit(df);
+            :}
+    | declaration_facteur:df {:
+                RESULT=df;
+            :}
     ;
 
-liste_parametres ::= parametre liste_parametres
-    | parametre
+declaration_facteur ::= declaration_facteur:df MUL atome:a {:
+                RESULT= new Multiplication();
+                ((Multiplication)RESULT).setFilsGauche(df);
+                ((Multiplication)RESULT).setFilsDroit(a);
+            :}
+    | declaration_facteur:df DIV atome:a {:
+                RESULT= new Division();
+                ((Division)RESULT).setFilsGauche(df);
+                ((Division)RESULT).setFilsDroit(a);
+            :}
+    | atome:a {:
+                RESULT = a;
+            :}
     ;
 
-parametre ::= declaration_expression
-    | declaration_expression SEPARATEURPARAM
-    ;
-
-declaration_expression ::= declaration_expression ADD declaration_facteur
-    | declaration_expression SUB declaration_facteur
-    | declaration_facteur
-    ;
-
-declaration_facteur ::= declaration_facteur MUL atome
-    | declaration_facteur DIV atome
-    | atome
-    ;
-
-atome ::= NUM
-    | IDF
-    | PO declaration_expression PF
+atome ::= NUM:valeur {:
+                RESULT = new Const(valeur);
+            :}
+    | IDF:nom {:
+                RESULT = new Idf(nom);
+            :}
+    | PO declaration_expression:de PF {:
+                RESULT = de;
+            :}
     ;

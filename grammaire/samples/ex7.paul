@@ -5,9 +5,8 @@ fonction void main() {
 }
 
 fonction void f(entier i) {
-    entier x;
-    x = 1;
-    entier y;
-    y = 1;
+    entier x = 1;
+    entier y = 1;
+
     a = i + x + y;
 }

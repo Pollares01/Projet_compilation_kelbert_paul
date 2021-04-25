@@ -1,6 +1,4 @@
-package main.java;
-
-import java.lang.reflect.Field;
+package fr.ul.miage.TDS;
 
 public class SymboleIdentifiant extends Symboles {
 

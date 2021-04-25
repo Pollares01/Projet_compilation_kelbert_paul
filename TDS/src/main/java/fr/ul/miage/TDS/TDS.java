@@ -1,17 +1,16 @@
-package main.java;
+package fr.ul.miage.TDS;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TDS {
 
     /**
-     * liste des symboles d'une TDS
+     * liste des symboles d'une fr.ul.miage.TDS.TDS
      */
-    private ArrayList<Symboles> listSym;
+    private final ArrayList<Symboles> listSym;
 
     /**
-     * Constructeur d'une TDS
+     * Constructeur d'une fr.ul.miage.TDS.TDS
      * @param listSym liste de symboles
      */
     public TDS(ArrayList<Symboles> listSym) {
@@ -45,7 +44,7 @@ public class TDS {
     /**
      * Getter d'un symbole par son nom
      * @param name nom du symbole recherché
-     * @return Symboles
+     * @return fr.ul.miage.TDS.Symboles
      */
     public Symboles getSymByName(String name){
         for(Symboles s : this.listSym){
@@ -73,9 +72,9 @@ public class TDS {
     }
 
     /**
-     * Recherche d'un identifiant dans une TDS
+     * Recherche d'un identifiant dans une fr.ul.miage.TDS.TDS
      * @param name nom de l'identifiant recherché
-     * @return SymboleIdentifiant
+     * @return fr.ul.miage.TDS.SymboleIdentifiant
      */
     public SymboleIdentifiant getIdfByName(String name){
         for(Symboles s : this.listSym){
@@ -89,7 +88,7 @@ public class TDS {
     }
 
     /**
-     * Getter de tous les identifiants d'une TDS
+     * Getter de tous les identifiants d'une fr.ul.miage.TDS.TDS
      * @return Liste d'identifiants
      */
     public ArrayList<Symboles> getIdentifiant(){

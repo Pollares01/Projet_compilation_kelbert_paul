@@ -1,6 +1,5 @@
 entier i;
-entier n;
-n = 5;
+entier n = 5;
 fonction void main() {
     i = 0;
     tq(i<n) {

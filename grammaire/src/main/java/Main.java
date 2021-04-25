@@ -1,4 +1,5 @@
-import fr.ul.miage.arbre.*;
+import fr.ul.miage.TDS.TDS;
+import fr.ul.miage.arbre.TxtAfficheur;
 import generated.fr.ul.miage.grammaire.ParserCup;
 import generated.fr.ul.miage.grammaire.Yylex;
 
@@ -18,7 +19,8 @@ public class Main {
                 Yylex scanner = new Yylex(new FileReader(filename));
                 ParserCup pc = new ParserCup(scanner);
                 pc.parse();
-//                TxtAfficheur.afficher(pc.resultat);
+                TxtAfficheur.afficher(pc.resultat);
+                TDS.afficherTDS(pc.tds);
                 System.out.println("OK");
             } catch (Exception e) {
                 LOG.severe(e.getMessage());

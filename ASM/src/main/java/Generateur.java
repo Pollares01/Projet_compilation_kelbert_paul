@@ -1,8 +1,4 @@
 import fr.ul.miage.arbre.*;
-import main.java.SymboleFonction;
-import main.java.Symboles;
-import main.java.TDS;
-
 
 public class Generateur {
 
